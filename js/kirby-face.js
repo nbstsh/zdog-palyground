@@ -119,11 +119,25 @@ const initIllo = () => {
 const illo = initIllo();
 illo.updateRenderGraph();
 
+let movementX = 0;
+let movementY = 0;
+
 const animate = () => {
-	illo.rotate.y += TAU / 360;
+	// illo.rotate.y += TAU / 360;
+	illo.rotate.x += (TAU / 360) * movementY;
+	illo.rotate.y += (TAU / 360) * movementX;
+	illo.translate.x += (TAU / 360) * -1 * movementX;
+	illo.translate.y += (TAU / 360) * -1 * movementY;
 	illo.updateRenderGraph();
 
 	requestAnimationFrame(animate);
 };
 
 animate();
+
+const canvasEl = document.querySelector('.kirby-face-canvas');
+
+canvasEl.addEventListener('mousemove', e => {
+	movementX = -1 * e.movementX;
+	movementY = -1 * e.movementY;
+});
