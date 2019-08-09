@@ -6,6 +6,9 @@ const COLOR_BLUSH = '#F5A';
 const COLOR_BLACK = '#333';
 const COLOR_RED = '#D03';
 
+// 1 TAU = 1 round
+var TAU = Zdog.TAU;
+
 const generateIllo = () =>
 	new Zdog.Illustration({
 		element: '.kirby-face-canvas',
@@ -25,11 +28,11 @@ const addFaceToBody = body =>
 		addTo: body
 	});
 
-const addEyeToFace = (face, eyePositionX = 1) => {
+const addEyeToFace = (face, rate) => {
 	const eyeGroup = new Zdog.Group({
 		addTo: face,
-		translate: { x: 2.4 * eyePositionX, y: -2 },
-		rotate: { x: -0.1 }
+		translate: { x: 2.4 * rate, y: -2 },
+		rotate: { x: 0.1 }
 	});
 	// eye
 	new Zdog.Ellipse({
@@ -52,17 +55,13 @@ const addEyeToFace = (face, eyePositionX = 1) => {
 	});
 };
 
-const addCheeckToFace = (face, cheeckRotateY) => {
-	const cheeck = new Zdog.Anchor({
-		addTo: face,
-		rotate: { y: 0.6 * cheeckRotateY }
-	});
-
+const addCheeckToFace = (face, rate) => {
 	new Zdog.Ellipse({
 		width: 2.5,
 		height: 1,
-		translate: { y: 1, z: 10.5 },
-		addTo: cheeck,
+		translate: { x: 5.7 * rate, y: 1.5, z: -1 },
+		rotate: { y: -10 * rate },
+		addTo: face,
 		color: COLOR_BLUSH,
 		stroke: 1
 	});
@@ -119,3 +118,12 @@ const initIllo = () => {
 
 const illo = initIllo();
 illo.updateRenderGraph();
+
+const animate = () => {
+	illo.rotate.y += TAU / 360;
+	illo.updateRenderGraph();
+
+	requestAnimationFrame(animate);
+};
+
+animate();
