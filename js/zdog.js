@@ -3,7 +3,9 @@ import * as Zdog from 'zdog';
 // create illo
 let illo = new Zdog.Illustration({
 	// set canvas with selector
-	element: '.zdog-canvas'
+	element: '.zdog-canvas',
+	// zoom up 2x
+	zoom: 2
 });
 // circle
 new Zdog.Ellipse({
